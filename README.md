@@ -2,6 +2,8 @@
 
 > YouTube intro/outro and podcast audiogram skills for AI coding agents — brand your channel and turn every episode into video.
 
+![YouTube Video Skills — animated showcase](./showcase.gif)
+
 ## Install
 
 ```bash
