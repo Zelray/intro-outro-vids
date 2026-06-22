@@ -102,6 +102,42 @@ Make the clip **playable on mute and on sound**: the waveform + captions must te
 - Real audio muxed in (`<Audio>`); story still reads with sound off.
 - 1:1 + 9:16 (and 16:9 if needed) from one composition, key content in the safe zone.
 
+## Deliver & verify (rendered stills → MP4)
+
+This is HEAVY tier: the deliverable is a real **MP4** (audio muxed in), and the waveform must be *data-driven* — its shape at any frame must match the audio at that time. Verify a few frames as stills before paying for the full encode.
+
+**Output contract:**
+- A Remotion project with the audiogram registered (`<Composition>` + zod `schema` + `defaultProps`), all motion frame-driven — no `Date.now()` / `Math.random()` / timers, and **no realtime analyser**.
+- Bake the amplitude/waveform samples into props (or decode once via `useAudioData`) **offline** — never analyse audio at render time; headless render has no realtime audio clock.
+- Deliverable = the rendered `out/*.mp4` (audio muxed via `<Audio src={staticFile()}>`) plus the project, so the user can re-render with new audio/captions.
+
+**Verify loop — render stills → inspect → encode.**
+
+```bash
+# 1. Frame-exact stills at start / mid / end, WITH SHIPPED PROPS (not just defaultProps)
+npx remotion still Audiogram out/f-start.png --frame=0   --props=./props.json
+npx remotion still Audiogram out/f-mid.png   --frame=N   --props=./props.json
+npx remotion still Audiogram out/f-end.png   --frame=N-1 --props=./props.json   # last = durationInFrames-1
+
+# 2. Inspect each PNG — fidelity (waveform/bar heights match the audio's amplitude at
+#    that exact time; the right caption phrase is on screen and synced) AND artifacts
+#    (missing cover art, caption off-canvas / under the bottom UI band, bar overflow).
+
+# 3. Only once the stills check out, encode the full video (audio muxed):
+npx remotion render Audiogram out/audiogram.mp4 --props=./props.json
+```
+
+- The waveform is **data-driven** — verify amplitude + caption sync at a few frames *before* the full render, so a desync is caught once, not after a long encode.
+- Use `npx remotion compositions` to read `durationInFrames`/`fps` and pick the end frame.
+- README demo: `npx remotion render Audiogram out/demo.gif --codec=gif` (silent, but proves the motion).
+
+**Before you finish:**
+1. `npx remotion still` renders cleanly at frame 0, mid, and last — no errors, no missing cover/audio assets.
+2. Bar/wave height at each checked frame matches the audio's amplitude there; the correct caption phrase is on screen and synced.
+3. Frame-driven only — no realtime analyser / `Date.now()` / `Math.random()` / timers; samples baked offline.
+4. Captions stay inside the safe zone (clear of the bottom ~18% UI band) at every checked frame; cover art + title + progress bar present.
+5. Full MP4 encoded with real audio muxed in and plays; (optional) GIF rendered for the README.
+
 ## Reference files
 
 - `references/waveform-render.md` — complete runnable components for both looks: a mirrored frequency-bar equalizer and a smooth oscilloscope wave (`visualizeAudio` / `visualizeAudioWaveform`), the full five-layer audiogram composition with cover art, title, progress bar and audio mux, a power-of-two/smoothing cheat sheet, and a dependency-free Web Audio + canvas variant that decodes to a per-frame sample array. Ends with build/attribution notes.

@@ -126,6 +126,46 @@ Keep fonts, layout, and timing fixed in the template so 20 channels stay structu
 - Up to 4 end-screen elements planned (1 video + subscribe is the highest-CTR layout).
 - Every text/color/logo/audio comes from the `brand` prop — one template, many channels.
 
+## Deliver & verify (rendered stills → MP4)
+
+This is HEAVY tier: the deliverables are real **MP4** plates (intro + outro). Verify the logo hit and the end-screen safe zones as stills before encoding — a sting that lands a frame off, or a logo stamped where YouTube draws its subscribe button, is expensive to discover after a full render.
+
+**Output contract:**
+- A Remotion project with both compositions registered (`<Composition>` + zod `schema` + `defaultProps`), all motion frame-driven — no `Date.now()` / `Math.random()` / timers.
+- Sting impact baked to the frame (`IMPACT = Math.round(0.8 * fps)`), not detected at runtime; audio via `<Audio src={staticFile()}>` so the export carries the sting.
+- Deliverable = the rendered `out/*-intro.mp4` + `out/*-outro.mp4` plus the project, so the user can re-skin via the `brand` prop and re-export.
+
+**Verify loop — render stills → inspect → encode.**
+
+```bash
+# 1. Frame-exact stills WITH SHIPPED brand props (not just defaultProps).
+#    Intro: windup / impact / settle.  Outro: fade-in / held end-screen plate.
+npx remotion still Intro out/i-windup.png --frame=12 --props=./brand.json
+npx remotion still Intro out/i-impact.png --frame=24 --props=./brand.json   # = round(0.8*fps)
+npx remotion still Intro out/i-settle.png --frame=40 --props=./brand.json
+npx remotion still Outro out/o-end.png    --frame=N  --props=./brand.json
+
+# 2. Inspect each PNG — fidelity (logo readable + captions/tagline correct; on the impact
+#    frame the logo is full-scale and the flash fires) AND artifacts (end-screen elements
+#    inside YouTube safe zones — branding in the LEFT third only, right two-thirds quiet,
+#    nothing within ~10% of any edge or in the bottom UI band; no off-canvas text/overflow).
+
+# 3. Only once the stills check out, encode both plates:
+npx remotion render Intro out/intro.mp4 --props=./brand.json
+npx remotion render Outro out/outro.mp4 --props=./brand.json
+```
+
+- Verify the **impact frame** explicitly (logo snapped to full, white flash decaying) — the sting must land *on* it, not near it.
+- Drop the dashed end-screen guides for the final render; verify the right two-thirds is intentionally quiet.
+- README demo: `npx remotion render Intro out/demo.gif --codec=gif`.
+
+**Before you finish:**
+1. `npx remotion still` renders cleanly at windup/impact/settle (intro) and the held plate (outro) — no errors, no missing logo/sting assets.
+2. On the impact frame the logo is full-scale and legible; intro ≤5s, outro ≥20s held (video ≥25s total).
+3. Frame-driven only — sting impact baked to a frame; no `Date.now()` / `Math.random()` / timers.
+4. End-screen elements land inside YouTube safe zones — branding in the left third, right two-thirds quiet, nothing in the bottom UI band or within ~10% of an edge.
+5. Both MP4s encoded with the sting muxed in and play; every text/color/logo/audio comes from the `brand` prop; (optional) GIF rendered for the README.
+
 ## Reference files
 
 - `references/intro-outro.md` — the full runnable Remotion compositions for both intro and outro, a CSS/GSAP logo-sting variant, an exact end-screen coordinate map for 16:9 and notes for 1080×1920, the method for finding an audio sting's impact frame and syncing the reveal to it, and the brand-prop schema with the batch render pipeline.
