@@ -10,14 +10,22 @@
 npx skills add iart-ai/youtube-video-skills
 ```
 
+Or add it as a Claude Code plugin marketplace:
+
+```bash
+/plugin marketplace add iart-ai/youtube-video-skills
+```
+
+then `/plugin install youtube-video-skills`.
+
 Works with Claude Code, Cursor, Codex, GitHub Copilot, and 40+ agents.
 
 ## What's included
 
 | Skill | What it does |
 |---|---|
-| [audiogram](./audiogram) | Turn a podcast clip, voiceover, or quote into a captioned waveform video for Reels, TikTok, Shorts, and feed posts. |
-| [youtube-intro-outro](./youtube-intro-outro) | Build a 3-5s branded intro sting and a 20s end-screen outro that respects YouTube's clickable element zones. |
+| [audiogram](./skills/audiogram) | Turn a podcast clip, voiceover, or quote into a captioned waveform video for Reels, TikTok, Shorts, and feed posts. |
+| [youtube-intro-outro](./skills/youtube-intro-outro) | Build a 3-5s branded intro sting and a 20s end-screen outro that respects YouTube's clickable element zones. |
 
 ## When it activates
 
@@ -37,8 +45,8 @@ Works with Claude Code, Cursor, Codex, GitHub Copilot, and 40+ agents.
 
 ## Skills
 
-- [audiogram](./audiogram)
-- [youtube-intro-outro](./youtube-intro-outro)
+- [audiogram](./skills/audiogram)
+- [youtube-intro-outro](./skills/youtube-intro-outro)
 
 ## Topics
 
