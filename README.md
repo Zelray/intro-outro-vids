@@ -1,6 +1,6 @@
 # Creator Channel Skills
 
-> Audiogram and YouTube intro/outro skills for Claude Code — brand your channel and repurpose every episode into motion graphics.
+> Audiogram and YouTube intro/outro skills for AI coding agents — brand your channel and repurpose every episode into motion graphics.
 
 ## Install
 
@@ -8,7 +8,7 @@
 npx skills add iart-ai/creator-channel-skills
 ```
 
-Works with Claude Code + 40+ agents.
+Works with Claude Code, Cursor, Codex, GitHub Copilot, and 40+ agents.
 
 ## What's included
 
