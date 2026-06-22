@@ -21,4 +21,4 @@ Turn an audio clip — a podcast highlight, a voiceover, or a quote — into a s
 - `references/waveform-render.md` — complete runnable components for both looks, the full audiogram composition with cover art, title, progress bar and audio mux, a power-of-two/smoothing cheat sheet, and a dependency-free Web Audio + canvas variant.
 
 ---
-Part of **[Creator Channel Skills](../)** · Built by **[iart.ai](https://iart.ai)** — controllable Motion Graphics MP4 from a prompt or data.
+Part of **[Creator Channel Skills](../)** · Built by **[iart.ai](https://iart.ai)** — the AI motion agent for editable, on-brand motion graphics.

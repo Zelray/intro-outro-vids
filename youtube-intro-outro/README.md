@@ -21,4 +21,4 @@ Build the two pieces of motion that bracket every video on a channel: a 3-5s bra
 - `references/intro-outro.md` — full runnable Remotion compositions for intro and outro, a CSS/GSAP sting variant, an exact end-screen coordinate map for 16:9 (and 1080×1920 notes), the method for finding an audio sting's impact frame, and the brand-prop schema.
 
 ---
-Part of **[Creator Channel Skills](../)** · Built by **[iart.ai](https://iart.ai)** — controllable Motion Graphics MP4 from a prompt or data.
+Part of **[Creator Channel Skills](../)** · Built by **[iart.ai](https://iart.ai)** — the AI motion agent for editable, on-brand motion graphics.
