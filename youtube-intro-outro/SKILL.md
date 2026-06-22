@@ -128,6 +128,8 @@ Keep fonts, layout, and timing fixed in the template so 20 channels stay structu
 
 ## Deliver & verify (rendered stills → MP4)
 
+> **Packaged helper** (`scripts/`): tile your stills with `scripts/contact-sheet.sh sheet.png f-hook.png f-mid.png f-end.png`, then assert the encode with `scripts/probe-mp4.sh out.mp4 [WxH] [fps]`. See `scripts/README.md`.
+
 This is HEAVY tier: the deliverables are real **MP4** plates (intro + outro). Verify the logo hit and the end-screen safe zones as stills before encoding — a sting that lands a frame off, or a logo stamped where YouTube draws its subscribe button, is expensive to discover after a full render.
 
 **Output contract:**

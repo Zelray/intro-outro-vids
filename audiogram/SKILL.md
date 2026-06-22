@@ -104,6 +104,8 @@ Make the clip **playable on mute and on sound**: the waveform + captions must te
 
 ## Deliver & verify (rendered stills → MP4)
 
+> **Packaged helper** (`scripts/`): tile your stills with `scripts/contact-sheet.sh sheet.png f-hook.png f-mid.png f-end.png`, then assert the encode with `scripts/probe-mp4.sh out.mp4 [WxH] [fps]`. See `scripts/README.md`.
+
 This is HEAVY tier: the deliverable is a real **MP4** (audio muxed in), and the waveform must be *data-driven* — its shape at any frame must match the audio at that time. Verify a few frames as stills before paying for the full encode.
 
 **Output contract:**
